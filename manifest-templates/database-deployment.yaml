@@ -1,0 +1,91 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: database-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/data"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-pv
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Mi
+  storageClassName: standard
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ecom-db
+  template:
+    metadata:
+      labels:
+        app: ecom-db
+    spec:
+      containers:
+        - name: mariadb
+          image: mariadb:10.10.5
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              ephemeral-storage: "1Gi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: MARIADB_ROOT_PASSWORD
+          envFrom:
+            - secretRef:
+                name: db-credentials
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
+            - name: mariadb-configmap-volume
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: database-pv
+        - name: mariadb-configmap-volume
+          configMap:
+            name: mariadb-configmap
+            items:
+              - key: db-load-script.sql
+                path: db-load-script.sql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-svc
+  labels:
+    app: ecom-db
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: ecom-db
