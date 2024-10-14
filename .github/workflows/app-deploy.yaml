@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: docker-login
+      - name: docker-auth
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
