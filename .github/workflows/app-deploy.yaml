@@ -39,5 +39,5 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - name: test-client
-        run: civo kubernetes list
+        run: civo kubernetes list --region=lon1
       
