@@ -38,4 +38,6 @@ jobs:
           token: ${{secrets.CIVO_TOKEN}}
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      - name: test-client
+        run: civo kubernetes list
       
