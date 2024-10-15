@@ -15,7 +15,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-database-pv
+  name: {{ .Release.Name }}-database-pvc
 spec:
   accessModes:
     - ReadWriteMany
