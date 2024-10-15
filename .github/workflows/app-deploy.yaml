@@ -38,6 +38,22 @@ jobs:
           token: ${{secrets.CIVO_TOKEN}}
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-      - name: test-client
-        run: civo kubernetes list --region=lon1
-      
+      - name: make config folder
+        run: mkdir ~/.kube
+      - name: set-region
+        run: civo region current
+      - name: save cluster auth details to config
+        run: civo kubernetes config bkd-bash --save --local-path ~/.kube/config -y
+      - name: auth dockerhub w k8s-cli
+        run: >
+          kubectl create secret docker-registry regcred
+          --docker-server=docker.io
+          --docker-username=${{ secrets.DOCKER_USERNAME }}
+          --docker-password=${{ secrets.DOCKER_PASSWORD }}
+          --docker-username=${{ secrets.DOCKER_USERNAME }}
+      - name: replace clusterid
+        run: sed -i "s/CLUSTER_ID/`civo kubernetes show bkd-bash -o custom`/" website-chart/values.yaml manifest-templates/ingress.yaml
+      - name: setup helm
+        uses: azure/setup-helm@v4.2.0
+      - name: install helm chart
+        run: helm install ecom-app ./website-chart  
