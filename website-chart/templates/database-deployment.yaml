@@ -22,7 +22,7 @@ spec:
   resources:
     requests:
       storage: {{.Values.persistentVolumeClaim.resources.request.storage}}
-  storageClassName: standard
+  storageClassName:  {{.Values.persistentVolumeClaim.storageClassName}}
 ---
 apiVersion: apps/v1
 kind: Deployment

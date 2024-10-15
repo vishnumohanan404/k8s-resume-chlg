@@ -18,4 +18,4 @@ persistentVolumeClaim:
   resources:
     request:
       storage: 500Mi
-
+  storageClassName: civo-volume
