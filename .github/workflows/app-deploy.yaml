@@ -1,4 +1,4 @@
-name: Kubernetes Resume Challenge
+name: Kubernetes Resume Challenge - Civo CI
 on:
   push:
     branches: ["main"]
@@ -6,7 +6,7 @@ on:
     branches: ["main"]
 
 jobs:
-  publish_image:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -16,9 +16,26 @@ jobs:
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      - name: build image
+      - name: build-image
         run: |
           docker build . -t vishnumohanan/ecom-web:latest
-      - name: publish
+      - name: publish-image
         run: |
           docker push vishnumohanan/ecom-web:latest
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        with:
+          charts_dir: website-chart
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: install-civo
+        uses: civo/action-civo@v1.0.1
+        with:
+          token: ${{secrets.CIVO_TOKEN}}
+      - name: update-civo
+        run: civo update
+      - name: list-clusters
+        run: civo kubernetes list
