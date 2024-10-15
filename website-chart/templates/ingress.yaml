@@ -15,6 +15,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: my-service
+                name: {{ .Release.Name }}-my-service
                 port:
                   number: 3000
