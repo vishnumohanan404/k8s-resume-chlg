@@ -35,7 +35,5 @@ jobs:
         uses: civo/action-civo@v1.0.1
         with:
           token: ${{secrets.CIVO_TOKEN}}
-      - name: update-civo
-        run: civo update
       - name: list-clusters
         run: civo kubernetes list
