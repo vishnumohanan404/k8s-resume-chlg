@@ -68,7 +68,7 @@ spec:
       volumes:
         - name: mariadb-data
           persistentVolumeClaim:
-            claimName: database-pv
+            claimName: {{ .Release.Name }}-database-pv
         - name: mariadb-configmap-volume
           configMap:
             name: mariadb-configmap
