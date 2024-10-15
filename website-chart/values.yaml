@@ -13,6 +13,7 @@ image:
 persistentVolume:
   capacity:
     storage: 1Gi
+  storageClassName: civo-volume
 
 persistentVolumeClaim:
   resources:
