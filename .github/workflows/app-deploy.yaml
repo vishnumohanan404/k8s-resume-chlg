@@ -41,7 +41,7 @@ jobs:
       - name: make config folder
         run: mkdir ~/.kube
       - name: set-region
-        run: civo region current
+        run: civo region current LON1
       - name: save cluster auth details to config
         run: civo kubernetes config bkd-bash --save --local-path ~/.kube/config -y
       - name: auth dockerhub w k8s-cli
