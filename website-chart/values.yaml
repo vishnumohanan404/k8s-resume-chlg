@@ -10,11 +10,11 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-persistantVolume:
+persistentVolume:
   capacity:
     storage: 1Gi
 
-persistantVolumeClaim:
+persistentVolumeClaim:
   resources:
     request:
       storage: 500Mi
