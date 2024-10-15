@@ -50,7 +50,6 @@ jobs:
           --docker-server=docker.io
           --docker-username=${{ secrets.DOCKER_USERNAME }}
           --docker-password=${{ secrets.DOCKER_PASSWORD }}
-          --docker-username=${{ secrets.DOCKER_USERNAME }}
       - name: replace clusterid
         run: sed -i "s/CLUSTER_ID/`civo kubernetes show bkd-bash -o custom`/" website-chart/values.yaml manifest-templates/ingress.yaml
       - name: setup helm
