@@ -18,7 +18,7 @@ metadata:
   name: {{ .Release.Name }}-database-pvc
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: {{.Values.persistentVolumeClaim.resources.request.storage}}
