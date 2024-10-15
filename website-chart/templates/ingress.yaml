@@ -8,7 +8,7 @@ metadata:
     app: ecom-app
 spec:
   rules:
-    - host: { { .Values.host } }
+    - host: {{ .Values.host }}
       http:
         paths:
           - path: /
