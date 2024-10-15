@@ -22,10 +22,10 @@ jobs:
       - name: publish-image
         run: |
           docker push vishnumohanan/ecom-web:latest
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
-        with:
-          charts_dir: website-chart
+      # - name: Run chart-releaser
+      #   uses: helm/chart-releaser-action@v1.6.0
+      #   with:
+      #     charts_dir: website-chart
   deploy:
     runs-on: ubuntu-latest
     steps:
