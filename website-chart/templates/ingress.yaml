@@ -8,11 +8,13 @@ metadata:
     app: ecom-app
 spec:
   rules:
-    - host: {{ .Values.host }}
+    - host: { { .Values.host } }
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
-              serviceName: my-service
-              servicePort: 3000
+              service:
+                name: my-service
+                port:
+                  number: 3000
