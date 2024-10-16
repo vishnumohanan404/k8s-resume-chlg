@@ -5,6 +5,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: traefik
+    # Add a new annotation to force re-sync
   labels:
     app: ecom-app
 spec:
