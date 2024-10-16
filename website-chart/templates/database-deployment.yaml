@@ -11,13 +11,6 @@
 #   hostPath:
 #     path: "/mnt/data"
 ---
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: hostpath-storage
-provisioner: k8s.io/minikube-hostpath
-volumeBindingMode: Immediate
----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -28,7 +21,6 @@ spec:
   resources:
     requests:
       storage: {{.Values.persistentVolumeClaim.resources.request.storage}}
-  storageClassName: hostpath-storage
 ---
 apiVersion: apps/v1
 kind: Deployment
