@@ -8,7 +8,7 @@ metadata:
     app: ecom-app
 spec:
   rules:
-    - host: {{ .Values.host }}
+    - host: e2ae037a-56b6-4f18-be50-b51bc32ec6e1.lb.civo.com
       http:
         paths:
           - path: /
@@ -18,3 +18,7 @@ spec:
                 name: {{ .Release.Name }}-my-service
                 port:
                   number: 3000
+  tls:
+    - hosts:
+      - e2ae037a-56b6-4f18-be50-b51bc32ec6e1.lb.civo.com
+      secretName: demo 
