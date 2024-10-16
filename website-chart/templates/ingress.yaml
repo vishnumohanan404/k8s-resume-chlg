@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: website-ingress
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: "traefik"
   labels:
     app: ecom-app
